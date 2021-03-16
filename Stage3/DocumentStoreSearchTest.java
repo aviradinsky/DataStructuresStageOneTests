@@ -1,6 +1,8 @@
 package edu.yu.cs.com1320.project;
 
 import edu.yu.cs.com1320.project.stage3.DocumentStore;
+import edu.yu.cs.com1320.project.stage3.Document;
+import edu.yu.cs.com1320.project.stage3.impl.DocumentImpl;
 import edu.yu.cs.com1320.project.stage3.impl.DocumentStoreImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -8,6 +10,7 @@ import org.junit.jupiter.api.Test;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.net.URI;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -62,6 +65,27 @@ public class DocumentStoreSearchTest {
             assertEquals(3, store.searchByPrefix("p").size());
             assertEquals(1, store.search("possum").size());
             store.deleteDocument(this.uri3);
+            DocumentImpl doc1 = new DocumentImpl(this.uri1, this.txt1);
+            DocumentImpl doc2 = new DocumentImpl(this.uri2, this.txt2);
+            DocumentImpl doc3 = new DocumentImpl(this.uri3, this.txt3);
+            for (char c = 'a'; c<='z'; c++) {
+                List<Document> list = store.searchByPrefix(Character.toString(c));
+                if (list.size()!=0) {
+                    assertNotEquals(doc3, list.get(0));
+                    if ((!list.get(0).equals(doc1))&&(!list.get(0).equals(doc2))) {
+                        fail();
+                    }
+                }
+            }
+            for (char c = '0'; c<='9'; c++) {
+                List<Document> list = store.searchByPrefix(Character.toString(c));
+                if (list.size()!=0) {
+                    assertNotEquals(doc3, list.get(0));
+                    if ((!list.get(0).equals(doc1))&&(!list.get(0).equals(doc2))) {
+                        fail();
+                    }
+                }
+            }
             assertEquals(0, store.search("possum").size());
             assertEquals(2, store.search("pizza").size());
             store.deleteDocument(this.uri2);
