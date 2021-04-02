@@ -1,12 +1,9 @@
 package edu.yu.cs.com1320.project.impl;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThrows;
-import static org.junit.Assert.assertTrue;
+import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.Comparator;
-
-import org.junit.jupiter.api.*;
 
 import edu.yu.cs.com1320.project.Trie;
 
